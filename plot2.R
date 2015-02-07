@@ -9,8 +9,6 @@
 # the base plotting system in R
 #   1 - Global Active Power (kilowatts)
 
-# setwd("/Users/shariharan/Dropbox/OnlineCourses/Coursera/ExpDataAnalysis/Project1")
-
 linkUrl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 zipFile <- "exdata-data-household_power_consumption.zip"
 textFile <- "household_power_consumption.txt"
@@ -41,7 +39,6 @@ if (useZip == TRUE) {
 colClasses <- c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric" )
 
 ## read the data in to the table!
-#data <- read.table(fileConn, header = TRUE, colClasses = colClasses, na.strings = "?")
 fullData <- read.table(fileConn, header = TRUE, na.strings = "?", sep = ";", colClasses = colClasses)  
 fullData$fDate <- as.Date(fullData$Date, "%d/%m/%Y")
 
@@ -55,7 +52,7 @@ plotData <- fullData[fullData$fDate %in% dateFilter,]
 plotData$fTime <- strptime(paste(plotData$Date, plotData$Time), format = "%d/%m/%Y %H:%M:%S")
 
 #prepare to plot now ... 
-png(filename = "plot2.png", width = 480, height = 480, units="px")
+png(filename = "plot2.png", width = 480, height = 480, units="px", bg = "transparent")
 
 #scatter plot plot2
 plot(plotData$fTime, 

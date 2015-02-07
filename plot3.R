@@ -8,8 +8,6 @@
 # this program creates a single .png file with the following plots
 #   1 - Energy Sub metering
 
-# setwd("/Users/shariharan/Dropbox/OnlineCourses/Coursera/ExpDataAnalysis/Project1")
-
 linkUrl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 zipFile <- "exdata-data-household_power_consumption.zip"
 textFile <- "household_power_consumption.txt"
@@ -54,7 +52,7 @@ plotData <- fullData[fullData$fDate %in% dateFilter,]
 plotData$fTime <- strptime(paste(plotData$Date, plotData$Time), format = "%d/%m/%Y %H:%M:%S")
 
 #prepare to plot now ... 
-png(filename = "plot3.png", width = 480, height = 480, units="px")
+png(filename = "plot3.png", width = 480, height = 480, units="px", bg = "transparent")
 
 #scatter plot plot3
 with(plotData, 
