@@ -8,6 +8,9 @@
 # this program creates a single .png file with the following plots
 #   1 - Energy Sub metering
 
+# this program expects either the .zip or .txt file available in the current directory
+# else will download the .zip from the URL and then processes it
+
 linkUrl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 zipFile <- "exdata-data-household_power_consumption.zip"
 textFile <- "household_power_consumption.txt"
@@ -16,13 +19,16 @@ textFile <- "household_power_consumption.txt"
 ## will not download if the .txt file is already present in the current folder!
 if (!file.exists(zipFile) ) {
   if (!file.exists(textFile)) {
-    download.file(linkUrl, zipFile)
+    message ("Both zip & txt doesn't exist! Starting download ...")
+    download.file(linkUrl, zipFile, method="curl", quiet = TRUE)
     dateDownloaded <- date()
     useZip <- TRUE
   } else {
+    message ("txt file found! using the txt file...")
     useZip <- FALSE
   }
 } else {
+  message ("zip file found! using the zip file...")
   useZip <- TRUE
 }
 
@@ -33,6 +39,8 @@ if (useZip == TRUE) {
 } else {
   fileConn<-file(textFile)
 }
+
+message("loading the data ...")
 
 ## identify the colClasses
 colClasses <- c("character", "character", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric" )
@@ -50,6 +58,8 @@ plotData <- fullData[fullData$fDate %in% dateFilter,]
 
 #add the time column ... 
 plotData$fTime <- strptime(paste(plotData$Date, plotData$Time), format = "%d/%m/%Y %H:%M:%S")
+
+message("starting the plot...")
 
 #prepare to plot now ... 
 png(filename = "plot3.png", width = 480, height = 480, units="px", bg = "transparent")
@@ -73,3 +83,6 @@ legend("topright",
 
 #save the file
 dev.off()
+
+message("...Done!")
+
